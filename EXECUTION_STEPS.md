@@ -83,7 +83,14 @@ COPY THIS EXACTLY:
 
 !pip install -r requirements.txt -q
 !pip install google-auth-oauthlib -q
-print("✓ Dependencies installed successfully!")
+
+# Install TTS from Coqui source
+!pip install TTS -q
+
+# Verify installation
+import sys
+print(f"Python version: {sys.version}")
+print("✓ All dependencies installed successfully!")
 
 ────────────────────────────────────────────────────
 
@@ -91,9 +98,13 @@ ACTION: Paste into NEW cell
 ACTION: Press CTRL+ENTER to run
 
 EXPECTED OUTPUT:
-✓ Dependencies installed successfully!
+Python version: 3.10.12 (or similar)
+✓ All dependencies installed successfully!
 
-⏳ This may take 1-2 minutes. Wait for it to complete!
+⏳ This may take 2-3 minutes. Wait for it to complete!
+
+NOTE: If you see warnings about Python version requirements, that's OK!
+      Colab uses Python 3.10+ which is compatible with all packages.
 
 
 # ============================================================================

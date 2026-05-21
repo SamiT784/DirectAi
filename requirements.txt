@@ -4,9 +4,9 @@ requests>=2.31.0
 pydantic>=2.0.0
 
 # Audio processing
-TTS>=0.14.0
 librosa>=0.10.0
 scipy>=1.11.0
+# TTS is installed separately in Colab via: pip install TTS
 
 # Video processing
 opencv-python>=4.8.0

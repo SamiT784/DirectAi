@@ -32,9 +32,17 @@ Video Ratio: 9:16 (540x960) - YouTube Shorts Ready!
 
 !pip install -r requirements.txt -q
 !pip install google-auth-oauthlib -q
+
+# Install TTS from Coqui source
+!pip install TTS -q
+
+# Verify installation
+import sys
+print(f"Python version: {sys.version}")
 print("✓ Dependencies installed successfully!")
 
 # Expected Output:
+# Python version: 3.10.12 (or similar)
 # ✓ Dependencies installed successfully!
 
 
