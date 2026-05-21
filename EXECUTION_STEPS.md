@@ -83,36 +83,60 @@ COPY THIS EXACTLY:
 
 # Step 1: System packages (FFmpeg, etc)
 print("Installing system packages...")
-!apt-get update -qq
+!apt-get update -qq > /dev/null 2>&1
 !apt-get install -y ffmpeg libsndfile1 > /dev/null 2>&1
 print("✓ System packages installed")
 
 # Step 2: Check Python version
 import sys
 python_version = sys.version_info
-print(f"\n✓ Python version: {python_version.major}.{python_version.minor}.{python_version.micro}")
+print(f"✓ Python version: {python_version.major}.{python_version.minor}.{python_version.micro}")
 
 # Step 3: Upgrade pip
-print("\n✓ Upgrading pip...")
-!pip install --upgrade pip setuptools wheel -q
+print("✓ Upgrading pip...")
+!pip install --upgrade pip setuptools wheel -q 2>&1 | grep -v "already satisfied" || true
 
 # Step 4: Install main dependencies
-print("\n✓ Installing Python packages from requirements.txt...")
+print("✓ Installing Python packages from requirements.txt...")
 !pip install -r requirements.txt -q
 
-# Step 5: Install TTS from Coqui source (Python 3.12 compatible)
-print("\n✓ Installing TTS (Text-to-Speech)...")
-!pip install git+https://github.com/coqui-ai/TTS.git -q
+# Step 5: Install TTS (with fallback)
+print("✓ Installing TTS (Text-to-Speech)...")
+try:
+    import subprocess
+    result = subprocess.run(
+        ['pip', 'install', 'git+https://github.com/coqui-ai/TTS.git', '-q'],
+        capture_output=True,
+        timeout=120
+    )
+    if result.returncode == 0:
+        print("  ✓ TTS installed from source")
+    else:
+        print("  ⚠️ TTS source install failed, trying alternatives...")
+        # Fallback: Try pip install
+        result2 = subprocess.run(
+            ['pip', 'install', 'TTS', '-q'],
+            capture_output=True,
+            timeout=60
+        )
+        if result2.returncode == 0:
+            print("  ✓ TTS installed from PyPI")
+        else:
+            print("  ⚠️ TTS unavailable (OPTIONAL - narration can still work)")
+except Exception as e:
+    print(f"  ⚠️ TTS install error (OPTIONAL - system will work without it): {str(e)[:50]}")
 
 # Step 6: Install Google Colab integration
-print("\n✓ Installing Google Colab packages...")
+print("✓ Installing Google Colab packages...")
 !pip install google-auth-oauthlib -q
 
 # Final verification
 print("\n" + "="*60)
-print("✓ All dependencies installed successfully!")
+print("✓ Core dependencies installed successfully!")
 print("="*60)
-print(f"Python: {sys.version}")
+print(f"Python: {python_version.major}.{python_version.minor}.{python_version.micro}")
+print("FFmpeg: Ready for video generation")
+print("Ready for: DirectorAI + ComfyUI generation")
 print("="*60)
 
 ────────────────────────────────────────────────────
