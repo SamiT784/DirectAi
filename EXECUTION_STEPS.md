@@ -22,11 +22,12 @@ BEFORE STARTING COLAB:
 2. Check you have folder: My Drive/AI/models/
 3. Inside, check you have:
    ✓ checkpoints/
-     - realisticVisionV60B1_v60B1VAE.safetensors (3GB)
-     - v1-5-pruned-emaonly.safetensors (4GB)
-     - mm_sd_v15_v2.ckpt (2GB)
+     - realisticVisionV60B1_v60B1VAE.safetensors (1.99GB)
+     - v1-5-pruned-emaonly.safetensors (3.97GB)
+   ✓ animatediff/
+     - mm_sd_v15_v2.ckpt (1.69GB)
    ✓ vae/
-     - vae-ft-mse-840000-ema-pruned.safetensors (360MB)
+     - vae-ft-mse-840000-ema-pruned.safetensors (0.31MB)
 
 If NOT found: Upload your models first!
 If found: Continue to STEP 1 below
@@ -248,6 +249,12 @@ Looking in: /content/drive/MyDrive/drive/AI/models
   ✓ checkpoints/v1-5-pruned-emaonly.safetensors: 4.16 GB
   ✓ checkpoints/mm_sd_v15_v2.ckpt: 2.01 GB
   ✓ vae/vae-ft-mse-840000-ema-pruned.safetensors: 0.34 GB
+
+✓ Found 4 model files:
+  ✓ animatediff/mm_sd_v15_v2.ckpt: 1.69 GB
+  ✓ checkpoints/realisticVisionV60B1_v60B1VAE.safetensors: 1.99 GB
+  ✓ checkpoints/v1-5-pruned-emaonly.safetensors: 3.97 GB
+  ✓ vae/vae-ft-mse-840000-ema-pruned.safetensors: 0.31 GB
 
 ✓ SUCCESS if all 4 files are found!
 ❌ FAIL if you get "NOT found" - check your Drive structure
