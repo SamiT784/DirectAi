@@ -1,0 +1,19 @@
+"""
+Sample Prompts File for DirectorAI
+Copy this template and modify with your own historical ideas
+"""
+
+{
+  "ideas": [
+    "Cleopatra VII, the last pharaoh of ancient Egypt, navigating complex political intrigue and diplomacy to maintain her kingdom's independence against Roman forces",
+    "The eruption of Mount Vesuvius in 79 AD, a catastrophic volcanic event that buried the Roman cities of Pompeii and Herculaneum, freezing their citizens in the final moments of their lives",
+    "Joan of Arc, a peasant girl in medieval France, leading armies during the Hundred Years' War, driven by her unwavering faith in divine destiny and her mission to save her nation",
+    "The Battle of Thermopylae in 480 BC, where 300 elite Spartan warriors made their legendary stand against a massive Persian army, sacrificing themselves for Greece's freedom",
+    "Hannibal Barca, the brilliant Carthaginian general, making the daring strategic decision to cross the Alps with war elephants to attack Rome during the Second Punic War",
+    "The fall of Constantinople in 1453, the final moment of the Byzantine Empire as Ottoman forces breached the ancient city's walls after centuries of glory",
+    "Genghis Khan, from humble beginnings as a nomadic warrior, uniting the Mongol tribes and creating the largest contiguous land empire in human history",
+    "The Library of Alexandria, humanity's greatest repository of ancient knowledge, as it burns, taking centuries of accumulated wisdom and scientific advancement with it",
+    "Tutankhamun, the young Egyptian pharaoh, ascending to the throne as a boy and ruling during a turbulent period of religious and political transformation",
+    "The Viking settlement of Vinland, Norse explorers crossing the Atlantic Ocean centuries before Columbus, establishing the first known European settlement in North America"
+  ]
+}

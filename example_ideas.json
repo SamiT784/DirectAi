@@ -1,0 +1,18 @@
+"""
+Example JSON file with historical ideas for batch processing
+"""
+
+{
+  "ideas": [
+    "The rise and fall of Cleopatra VII, the last pharaoh of ancient Egypt",
+    "The Battle of Thermopylae: 300 Spartans against the Persian empire",
+    "Hannibal's daring journey across the Alps with his war elephants",
+    "The eruption of Mount Vesuvius and the fall of Pompeii",
+    "Joan of Arc: The peasant girl who changed the course of the Hundred Years' War",
+    "The Byzantine Empire: A thousand years of Eastern Roman glory",
+    "Genghis Khan and the creation of the Mongol Empire",
+    "The Silk Road: Connecting civilizations across continents",
+    "The Library of Alexandria: The greatest repository of ancient knowledge",
+    "The Viking raids and the conquest of Normandy"
+  ]
+}

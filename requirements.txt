@@ -1,0 +1,36 @@
+"""
+Requirements for DirectorAI
+"""
+
+# Core dependencies
+python-dotenv>=1.0.0
+requests>=2.31.0
+pydantic>=2.0.0
+
+# Audio processing
+TTS>=0.14.0
+librosa>=0.10.0
+scipy>=1.11.0
+
+# Video processing
+opencv-python>=4.8.0
+imageio>=2.33.0
+imageio-ffmpeg>=1.4.0
+
+# Image processing
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# Deep learning (placeholder for actual model loading)
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Development and testing
+pytest>=7.4.0
+black>=23.0.0
+pylint>=3.0.0
+
+# Optional: For Google Colab compatibility
+# google-colab
+# google-auth-oauthlib
+# google-auth-httplib2
