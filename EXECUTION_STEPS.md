@@ -265,7 +265,158 @@ Copying models from Drive to Colab (5-15 minutes)...
 
 
 # ============================================================================
-# STEP 7: PASTE AND RUN CELL 6 (TEST EVERYTHING)
+# STEP 7: PASTE AND RUN CELL 6 (SETUP COMFYUI) ⏳ 5-10 MINUTES!
+# ============================================================================
+
+ComfyUI is the AI engine that generates images and animations.
+We need to clone it and start the server.
+
+COPY THIS EXACTLY:
+────────────────────────────────────────────────────
+
+import os
+import subprocess
+import time
+
+# Clone ComfyUI
+print("Cloning ComfyUI...")
+os.chdir('/content')
+!git clone https://github.com/comfyanonymous/ComfyUI.git
+
+# Install ComfyUI dependencies
+print("\nInstalling ComfyUI dependencies...")
+os.chdir('/content/ComfyUI')
+!pip install -r requirements.txt -q
+
+# Create symbolic link for models
+print("\nLinking models to ComfyUI...")
+import shutil
+from pathlib import Path
+
+models_src = Path('/content/DirectAi/models')
+models_dst = Path('/content/ComfyUI/models')
+
+if models_src.exists():
+    for item in models_src.iterdir():
+        dst_item = models_dst / item.name
+        if not dst_item.exists():
+            if item.is_dir():
+                shutil.copytree(item, dst_item)
+            else:
+                shutil.copy2(item, dst_item)
+            print(f"  ✓ Linked: {item.name}")
+
+print("\n✓ ComfyUI setup complete!")
+print("  - Ready to generate images and animations")
+
+────────────────────────────────────────────────────
+
+ACTION: Paste into NEW cell
+ACTION: Press CTRL+ENTER to run
+
+⏳ WAIT 5-10 MINUTES! ComfyUI has many dependencies!
+
+EXPECTED OUTPUT:
+Cloning ComfyUI...
+Cloning into 'ComfyUI'...
+...
+Installing ComfyUI dependencies...
+Collecting torch...
+...
+Linking models to ComfyUI...
+  ✓ Linked: checkpoints
+  ✓ Linked: vae
+✓ ComfyUI setup complete!
+  - Ready to generate images and animations
+
+✓ SUCCESS if you see "setup complete"!
+
+
+# ============================================================================
+# STEP 8: PASTE AND RUN CELL 7 (START COMFYUI SERVER) ⚠️ KEEP RUNNING!
+# ============================================================================
+
+ComfyUI runs as a background server. This cell starts it.
+
+COPY THIS EXACTLY:
+────────────────────────────────────────────────────
+
+import subprocess
+import time
+import requests
+import threading
+
+os.chdir('/content/ComfyUI')
+
+print("Starting ComfyUI server on http://127.0.0.1:8188...")
+print("=" * 60)
+
+# Start ComfyUI server in background
+server_process = subprocess.Popen(
+    ['python', 'main.py'],
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE
+)
+
+print("ComfyUI server starting... waiting for startup (30-60 seconds)")
+
+# Wait for server to be ready
+max_retries = 60
+for attempt in range(max_retries):
+    try:
+        response = requests.get('http://127.0.0.1:8188/api/system_stats')
+        if response.status_code == 200:
+            print(f"\n✓ ComfyUI server is READY!")
+            print(f"  - URL: http://127.0.0.1:8188")
+            print(f"  - Status: Running")
+            print(f"  - Models loaded: {len(list(Path('/content/ComfyUI/models/checkpoints').glob('*')))}")
+            print("=" * 60)
+            print("\n⚠️ IMPORTANT: Keep this cell running while generating!")
+            print("   Do NOT stop the server or close this cell!")
+            print("   If needed, run this cell again if it crashes")
+            break
+    except:
+        if attempt % 10 == 0:
+            print(f"  Waiting... ({attempt}s elapsed)")
+        time.sleep(1)
+
+if server_process.poll() is not None:
+    print("\n❌ ComfyUI server failed to start!")
+    print("Output:", server_process.stdout.read().decode())
+    print("Error:", server_process.stderr.read().decode())
+else:
+    print("\n✓ Server is running. Keep this cell active!")
+
+────────────────────────────────────────────────────
+
+ACTION: Paste into NEW cell
+ACTION: Press CTRL+ENTER to run
+
+EXPECTED OUTPUT:
+Starting ComfyUI server on http://127.0.0.1:8188...
+============================================================
+ComfyUI server starting... waiting for startup (30-60 seconds)
+  Waiting... (0s elapsed)
+  Waiting... (10s elapsed)
+  Waiting... (20s elapsed)
+
+✓ ComfyUI server is READY!
+  - URL: http://127.0.0.1:8188
+  - Status: Running
+  - Models loaded: 3
+============================================================
+
+⚠️ IMPORTANT: Keep this cell running while generating!
+   Do NOT stop the server or close this cell!
+   If needed, run this cell again if it crashes
+
+✓ SUCCESS if server shows READY!
+
+⚠️ IMPORTANT: This cell MUST keep running during generation!
+
+
+# ============================================================================
+# STEP 9: PASTE AND RUN CELL 8 (TEST EVERYTHING)
 # ============================================================================
 
 COPY THIS EXACTLY:
@@ -299,7 +450,7 @@ Testing DirectorAI Architecture...
 
 
 # ============================================================================
-# STEP 8: PASTE AND RUN CELL 7 (GENERATE YOUR VIDEOS!)
+# STEP 10: PASTE AND RUN CELL 9 (GENERATE YOUR VIDEOS!)
 # ============================================================================
 
 COPY THIS EXACTLY:
@@ -334,10 +485,10 @@ Job 3: QUEUED
 
 
 # ============================================================================
-# STEP 9 (OPTIONAL): MONITOR PROGRESS WHILE GENERATING
+# STEP 11 (OPTIONAL): MONITOR PROGRESS WHILE GENERATING
 # ============================================================================
 
-While STEP 8 is running, you can monitor progress:
+While STEP 10 is running, you can monitor progress:
 
 COPY THIS EXACTLY:
 ────────────────────────────────────────────────────
@@ -384,7 +535,7 @@ for i in range(100):  # Check up to 100 times (30+ minutes)
 
 ────────────────────────────────────────────────────
 
-ACTION: Paste into NEW cell (while Cell 7 is still running)
+ACTION: Paste into NEW cell (while Cell 9 is still running)
 ACTION: Press CTRL+ENTER to run
 
 This shows progress every 30 seconds:
@@ -395,10 +546,10 @@ This shows progress every 30 seconds:
 
 
 # ============================================================================
-# STEP 10: PASTE AND RUN CELL 10 (COPY TO GOOGLE DRIVE) ⚠️ IMPORTANT!
+# STEP 12: PASTE AND RUN CELL 11 (COPY TO GOOGLE DRIVE) ⚠️ IMPORTANT!
 # ============================================================================
 
-Run this AFTER generation completes (Cell 7 finishes):
+Run this AFTER generation completes (Cell 9 finishes):
 
 COPY THIS EXACTLY:
 ────────────────────────────────────────────────────
@@ -472,7 +623,7 @@ Destination: /content/drive/MyDrive/DirectAi_Results
 
 
 # ============================================================================
-# STEP 11: DOWNLOAD YOUR VIDEOS FROM GOOGLE DRIVE
+# STEP 13: DOWNLOAD YOUR VIDEOS FROM GOOGLE DRIVE
 # ============================================================================
 
 ACTION: Go to Google Drive: https://drive.google.com
@@ -492,7 +643,7 @@ ACTION: Download each MP4 file
 
 
 # ============================================================================
-# STEP 12: UPLOAD TO YOUTUBE AS SHORTS
+# STEP 14: UPLOAD TO YOUTUBE AS SHORTS
 # ============================================================================
 
 Now you have 3 YouTube Shorts ready!
@@ -522,14 +673,16 @@ ACTION: Publish!
 ✓ Step 4: Mounted Google Drive
 ✓ Step 5: Verified your models
 ✓ Step 6: Copied models to Colab (5-10 min)
-✓ Step 7: Tested that everything works
-✓ Step 8: Generated 3 YouTube Shorts (15-45 min)
-✓ Step 9: Monitored progress
-✓ Step 10: Copied results to Drive (2-5 min)
-✓ Step 11: Downloaded MP4s to your computer
-✓ Step 12: Uploaded to YouTube!
+✓ Step 7: Setup ComfyUI (5-10 min) ← NEW!
+✓ Step 8: Started ComfyUI server (1 min) ← NEW!
+✓ Step 9: Tested that everything works
+✓ Step 10: Generated 3 YouTube Shorts (15-45 min)
+✓ Step 11: Monitored progress
+✓ Step 12: Copied results to Drive (2-5 min)
+✓ Step 13: Downloaded MP4s to your computer
+✓ Step 14: Uploaded to YouTube!
 
-TOTAL TIME: ~45-90 minutes (includes model copy + generation)
+TOTAL TIME: ~60-120 minutes (includes ComfyUI setup + model copy + generation)
 RESULT: 3 YouTube Shorts about historical events, 9:16 portrait format!
 
 
@@ -537,18 +690,20 @@ RESULT: 3 YouTube Shorts about historical events, 9:16 portrait format!
 # NEXT TIME (IF COLAB DISCONNECTS)
 # ============================================================================
 
-Next session is FASTER because models are already on Drive:
+Next session is FASTER because models and ComfyUI are already there:
 
 1. Open new Colab notebook
-2. Run Step 2 (Clone - 30 sec)
-3. Run Step 3 (Install - 1 min)
-4. Run Step 4 (Mount - 10 sec)
+2. Run Step 2 (Clone) - 30 sec
+3. Run Step 3 (Install) - 1 min
+4. Run Step 4 (Mount) - 10 sec
 5. Skip Step 5 (models already there)
-6. Run Step 7 (Generate - 15-45 min)
-7. Run Step 10 (Copy to Drive - 2-5 min)
-8. Download!
+6. Run Step 7 (ComfyUI setup) - Only if ComfyUI not cloned (1 min)
+7. Run Step 8 (Start ComfyUI) - 1 min
+8. Run Step 10 (Generate) - 15-45 min
+9. Run Step 12 (Copy to Drive) - 2-5 min
+10. Download!
 
-TOTAL TIME NEXT TIME: ~20-60 minutes (no model copy!)
+TOTAL TIME NEXT TIME: ~30-65 minutes (faster!)
 
 
 # ============================================================================
@@ -560,6 +715,8 @@ Clone Command: git clone https://github.com/SamiT784/DirectAi.git
 
 Your Models: My Drive/drive/AI/models/
 Generated Videos: My Drive/DirectAi_Results/ (auto-created)
+ComfyUI Location: /content/ComfyUI/ (cloned in Colab)
+ComfyUI Server: http://127.0.0.1:8188
 
 Video Format: 540x960 (9:16 portrait)
 3 Test Ideas: Cleopatra, Mount Vesuvius, Joan of Arc
@@ -573,6 +730,7 @@ Test File: test_prompts.json
 You now have 3 beautiful historical YouTube Shorts!
 Format: Perfect 9:16 portrait
 Quality: HD (540x960)
+Generated by: DirectorAI + ComfyUI
 Ready to: Upload to YouTube
 
 Congratulations! Your DirectorAI system is working! 🚀
