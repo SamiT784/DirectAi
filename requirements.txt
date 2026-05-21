@@ -6,12 +6,12 @@ pydantic>=2.0.0
 # Audio processing
 librosa>=0.10.0
 scipy>=1.11.0
-# TTS is installed separately in Colab via: pip install TTS
 
 # Video processing
 opencv-python>=4.8.0
 imageio>=2.33.0
-imageio-ffmpeg>=1.4.0
+# imageio-ffmpeg is installed via system package (apt-get) in Colab
+# This avoids Python 3.12 compatibility issues
 
 # Image processing
 Pillow>=10.0.0
@@ -26,7 +26,5 @@ pytest>=7.4.0
 black>=23.0.0
 pylint>=3.0.0
 
-# Optional: For Google Colab compatibility
-# google-colab
-# google-auth-oauthlib
-# google-auth-httplib2
+# NOTE: TTS and ffmpeg are installed separately in Colab
+# See EXECUTION_STEPS.md Cell 2 for installation

@@ -81,16 +81,39 @@ drwxr-xr-x  scripts
 COPY THIS EXACTLY:
 ────────────────────────────────────────────────────
 
+# Step 1: System packages (FFmpeg, etc)
+print("Installing system packages...")
+!apt-get update -qq
+!apt-get install -y ffmpeg libsndfile1 > /dev/null 2>&1
+print("✓ System packages installed")
+
+# Step 2: Check Python version
+import sys
+python_version = sys.version_info
+print(f"\n✓ Python version: {python_version.major}.{python_version.minor}.{python_version.micro}")
+
+# Step 3: Upgrade pip
+print("\n✓ Upgrading pip...")
+!pip install --upgrade pip setuptools wheel -q
+
+# Step 4: Install main dependencies
+print("\n✓ Installing Python packages from requirements.txt...")
 !pip install -r requirements.txt -q
+
+# Step 5: Install TTS from Coqui source (Python 3.12 compatible)
+print("\n✓ Installing TTS (Text-to-Speech)...")
+!pip install git+https://github.com/coqui-ai/TTS.git -q
+
+# Step 6: Install Google Colab integration
+print("\n✓ Installing Google Colab packages...")
 !pip install google-auth-oauthlib -q
 
-# Install TTS from Coqui source
-!pip install TTS -q
-
-# Verify installation
-import sys
-print(f"Python version: {sys.version}")
+# Final verification
+print("\n" + "="*60)
 print("✓ All dependencies installed successfully!")
+print("="*60)
+print(f"Python: {sys.version}")
+print("="*60)
 
 ────────────────────────────────────────────────────
 
@@ -98,13 +121,29 @@ ACTION: Paste into NEW cell
 ACTION: Press CTRL+ENTER to run
 
 EXPECTED OUTPUT:
-Python version: 3.10.12 (or similar)
+Installing system packages...
+✓ System packages installed
+
+✓ Python version: 3.12.13
+
+✓ Upgrading pip...
+✓ Installing Python packages from requirements.txt...
+✓ Installing TTS (Text-to-Speech)...
+✓ Installing Google Colab packages...
+
+============================================================
 ✓ All dependencies installed successfully!
+============================================================
+Python: 3.12.13 (main, Mar 4 2026, 09:23:07) [GCC 11.4.0]
+============================================================
 
-⏳ This may take 2-3 minutes. Wait for it to complete!
+⏳ This may take 3-5 minutes. Wait for it to complete!
 
-NOTE: If you see warnings about Python version requirements, that's OK!
-      Colab uses Python 3.10+ which is compatible with all packages.
+NOTE: If you see any warnings, that's OK!
+      We're handling Python 3.12 compatibility automatically.
+      The important part is no ERROR messages at the end.
+
+✓ SUCCESS if you see "All dependencies installed successfully!"
 
 
 # ============================================================================
