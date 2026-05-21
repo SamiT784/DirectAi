@@ -63,8 +63,8 @@ class DirectorAIConfig:
             "style": "cinematic_historical",
         },
         "image": {
-            "width": 768,
-            "height": 432,
+            "width": 540,
+            "height": 960,
             "steps": 30,
             "guidance_scale": 7.5,
         },
