@@ -4,7 +4,7 @@ DIRECTORAI - EXECUTION GUIDE FOR GOOGLE COLAB
 ========================================================================
 
 Your Repository: https://github.com/SamiT784/DirectAi.git
-Your Models Location: My Drive/drive/AI/models
+Your Models Location: My Drive/AI/models
 Video Format: 9:16 Portrait (540x960) - YouTube Shorts Ready!
 Date: Today
 
@@ -19,7 +19,7 @@ This document shows EVERY SINGLE STEP with exact commands.
 
 BEFORE STARTING COLAB:
 1. Go to Google Drive: https://drive.google.com
-2. Check you have folder: My Drive/drive/AI/models/
+2. Check you have folder: My Drive/AI/models/
 3. Inside, check you have:
    ✓ checkpoints/
      - realisticVisionV60B1_v60B1VAE.safetensors (3GB)
@@ -213,7 +213,7 @@ COPY THIS EXACTLY:
 import os
 from pathlib import Path
 
-models_dir = Path('/content/drive/MyDrive/drive/AI/models')
+models_dir = Path('/content/drive/MyDrive/AI/models')
 
 print("Checking models on Google Drive...")
 print(f"Looking in: {models_dir}")
@@ -230,7 +230,7 @@ if models_dir.exists():
 else:
     print(f"❌ Models directory NOT found at: {models_dir}")
     print("\nTROUBLESHOOTING:")
-    print("1. Check your Drive has folder: My Drive/drive/AI/models")
+    print("1. Check your Drive has folder: My Drive/AI/models")
     print("2. Upload your models there")
     print("3. Try again")
 
@@ -264,7 +264,7 @@ import shutil
 import time
 from pathlib import Path
 
-src = Path('/content/drive/MyDrive/drive/AI/models')
+src = Path('/content/drive/MyDrive/AI/models')
 dst = Path('/content/DirectAi/models')
 
 print("Copying models from Drive to Colab (5-15 minutes)...")
@@ -776,7 +776,7 @@ TOTAL TIME NEXT TIME: ~30-65 minutes (faster!)
 Repository: https://github.com/SamiT784/DirectAi.git
 Clone Command: git clone https://github.com/SamiT784/DirectAi.git
 
-Your Models: My Drive/drive/AI/models/
+Your Models: My Drive/AI/models/
 Generated Videos: My Drive/DirectAi_Results/ (auto-created)
 ComfyUI Location: /content/ComfyUI/ (cloned in Colab)
 ComfyUI Server: http://127.0.0.1:8188
